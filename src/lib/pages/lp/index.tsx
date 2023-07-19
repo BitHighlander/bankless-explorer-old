@@ -15,9 +15,11 @@ import {
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+
 import { usePioneer } from "lib/context/Pioneer";
-import Sessions from "./components/Sessions";
+
 import CapTable from "./components/CapTable";
+import Sessions from "./components/Sessions";
 
 const LP = () => {
   const { terminalName } = useParams<{ terminalName: string }>();
@@ -73,8 +75,10 @@ const LP = () => {
       };
       invocation.broadcast = payload;
       const resultBroadcast = await app.broadcast(invocation);
+      // eslint-disable-next-line no-console
       console.log("resultBroadcast: ", resultBroadcast);
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error(error);
     }
   };
@@ -83,12 +87,15 @@ const LP = () => {
     try {
       if (api) {
         // Make REST calls to fetch the locations data
+        // eslint-disable-next-line no-console
         console.log("terminalName: ", terminalName);
 
         // get address
         const pubkey = app.pubkeys.filter((e: any) => e.symbol === "ETH");
+        // eslint-disable-next-line no-console
         console.log("pubkey: ", pubkey);
         const myAddress = pubkey[0].address;
+        // eslint-disable-next-line no-console
         console.log("myAddress: ", myAddress);
 
         const body = {
@@ -107,6 +114,7 @@ const LP = () => {
         // setLocations(locationsData);
       }
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error(error);
     }
   };
@@ -124,8 +132,6 @@ const LP = () => {
         );
         // eslint-disable-next-line prefer-destructuring
         terminal = terminal[0];
-        console.log("terminal: ", terminal);
-        console.log("terminal: ", terminal.pubkey);
         setAtmAddress(terminal.pubkey);
         setRate(terminal.rate);
         setUsd(terminal.TOTAL_CASH);
@@ -133,6 +139,7 @@ const LP = () => {
         // setLocations(locationsData);
       }
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error(error);
     }
   };
@@ -168,13 +175,13 @@ const LP = () => {
               terminalName: {terminalName}
             </Text>
             <Text fontSize="xl" fontWeight="bold" textAlign="center" mb={4}>
-              rate: {rate ? rate : "0"}
+              rate: {rate || "0"}
             </Text>
             <Text fontSize="xl" fontWeight="bold" textAlign="center" mb={4}>
-              USD: {usd ? usd : "0"}
+              USD: {usd || "0"}
             </Text>
             <Text fontSize="xl" fontWeight="bold" textAlign="center" mb={4}>
-              DAI: {dai ? dai : "0"}
+              DAI: {dai || "0"}
             </Text>
             <Text fontSize="xl" fontWeight="bold" textAlign="center" mb={4}>
               address: {atmAddress}
@@ -224,14 +231,13 @@ const LP = () => {
             )}
           </TabPanel>
           <TabPanel>
-            <Sessions terminalName={terminalName}/>
+            <Sessions terminalName={terminalName} />
           </TabPanel>
           <TabPanel>
-            <CapTable terminalName={terminalName}/>
+            <CapTable terminalName={terminalName} />
           </TabPanel>
         </TabPanels>
       </Tabs>
-
     </Box>
   );
 };

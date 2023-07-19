@@ -1,27 +1,10 @@
-import { Spinner, Box, Button, Flex, Image, Link, Stack, Text } from "@chakra-ui/react";
+import { Spinner, Box, Button, Stack, Text } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
-import { AiFillGithub } from "react-icons/ai";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-import { Link as RouterLink, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import "leaflet/dist/leaflet.css";
 import { usePioneer } from "lib/context/Pioneer";
-
-const locationsData = [
-  {
-    terminalId: 1,
-    terminalName: "Terminal A",
-    rate: "$1.01 USD/DAI",
-    location: [51.505, -0.09],
-  },
-  {
-    terminalId: 2,
-    terminalName: "Terminal B",
-    rate: "$.94 USD/DAI",
-    location: [51.51, -0.1],
-  },
-  // Add more location objects as needed
-];
 
 const MapWithPins = () => {
   const { state } = usePioneer();
@@ -29,13 +12,9 @@ const MapWithPins = () => {
   const [locations, setLocations] = useState([]);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    onStart();
-  }, [api]);
-
   const onStart = async () => {
     try {
-      if(api){
+      if (api) {
         // Make REST calls to fetch the locations data
         const terminals = await api.BanklessInfo();
         // eslint-disable-next-line no-console
@@ -48,7 +27,11 @@ const MapWithPins = () => {
     }
   };
 
-  const handleLPProvideClick = (terminalName:string) => {
+  useEffect(() => {
+    onStart();
+  }, [api]);
+
+  const handleLPProvideClick = (terminalName: string) => {
     navigate(`/lp/${terminalName}`);
   };
 
@@ -87,7 +70,11 @@ const MapWithPins = () => {
             <Text>atmAddress: {terminal.pubkey}</Text>
             <Text>usd: {terminal.TOTAL_CASH}</Text>
             <Text>dai: {terminal.TOTAL_DAI}</Text>
-            <Button colorScheme="teal" mt={2} onClick={() => handleLPProvideClick(terminal.terminalName)}>
+            <Button
+              colorScheme="teal"
+              mt={2}
+              onClick={() => handleLPProvideClick(terminal.terminalName)}
+            >
               LP Provide
             </Button>
           </Box>

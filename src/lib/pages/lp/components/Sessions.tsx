@@ -1,6 +1,6 @@
 import { List, ListItem, ListIcon, Spinner, Text } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
-import { MdCheckCircle, MdSettings } from "react-icons/md";
+import { MdCheckCircle } from "react-icons/md";
 
 import { usePioneer } from "lib/context/Pioneer";
 
@@ -44,7 +44,10 @@ const Sessions = (terminalName: string) => {
           <Text>{session.rate}</Text>
           <Text>{session.type}</Text>
           <Text>{session.event}</Text>
-          <Text>total value: {parseFloat(session.TOTAL_USD) + parseFloat(session.TOTAL_DAI)}</Text>
+          <Text>
+            total value:{" "}
+            {parseFloat(session.TOTAL_USD) + parseFloat(session.TOTAL_DAI)}
+          </Text>
         </ListItem>
       ))}
     </List>

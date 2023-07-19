@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { usePioneer } from "lib/context/Pioneer";
 import { Spinner, Text } from "@chakra-ui/react";
+import React, { useEffect, useState } from "react";
 
-const CapTable = (terminalName:any) => {
+import { usePioneer } from "lib/context/Pioneer";
+
+const CapTable = (terminalName: any) => {
   const { state } = usePioneer();
   const { api } = state;
   const [owners, setOwners] = useState([]);
@@ -10,20 +11,6 @@ const CapTable = (terminalName:any) => {
   const onStart = async () => {
     try {
       // Mock ownership data for testing
-      const mockOwners = [
-        {
-          address: "0x123456789",
-          percent: 30,
-        },
-        {
-          address: "0xabcdef123",
-          percent: 40,
-        },
-        {
-          address: "0x987654321",
-          percent: 30,
-        },
-      ];
       console.log("terminalName: ", terminalName);
       console.log("terminalName: ", terminalName.terminalName);
       // get private info
@@ -34,7 +21,6 @@ const CapTable = (terminalName:any) => {
       console.log("terminalInfo: ", terminalInfo);
       console.log("terminalInfo: ", terminalInfo.terminalInfo);
       console.log("captable: ", terminalInfo?.terminalInfo?.captable);
-
 
       setOwners(terminalInfo?.terminalInfo?.captable);
     } catch (error) {
